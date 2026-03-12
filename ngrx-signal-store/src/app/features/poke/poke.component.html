@@ -1,0 +1,23 @@
+<div class="poke-container">
+  <h2>PokeAPI (NgRx Signal Store)</h2>
+
+  <button (click)="store.loadPokemons()" [disabled]="store.loading()">
+    {{ store.loading() ? 'Cargando...' : 'Recargar' }}
+  </button>
+
+  @if (store.loading()) {
+    <div>Cargando pokémons...</div>
+  }
+
+  @if (store.error()) {
+    <div class="error">Error: {{ store.error() }}</div>
+  }
+
+  @if (!store.loading() && !store.error()) {
+    <ul>
+      @for (pokemon of store.pokemons(); track pokemon.name) {
+        <li>{{ pokemon.name }}</li>
+      }
+    </ul>
+  }
+</div>

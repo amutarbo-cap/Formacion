@@ -1,0 +1,12 @@
+<div class="poke-container">
+  <h2>PokeAPI (ngrx demo)</h2>
+
+  <button (click)="load()" [disabled]="(loading$ | async) || false">Recargar</button>
+
+  <div *ngIf="loading$ | async">Cargando...</div>
+  <div *ngIf="error$ | async as error" class="error">Error: {{ error }}</div>
+
+  <ul>
+    <li *ngFor="let pokemon of pokemons$ | async">{{ pokemon.name }}</li>
+  </ul>
+</div>
