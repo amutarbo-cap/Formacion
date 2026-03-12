@@ -1,0 +1,6 @@
+node_modules
+www
+www/**
+DIST
+dist
+*.log

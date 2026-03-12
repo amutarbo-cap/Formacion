@@ -1,0 +1,10 @@
+# Node
+node_modules/
+
+# Build output
+www/
+.dist/
+Coverage
+
+# environment
+src/environments/environment*.ts
