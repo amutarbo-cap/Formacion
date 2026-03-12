@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PokéDex — Diseño de referencia</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="pokeapi.css">
+</link>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════════ -->
+<!-- HEADER                                                       -->
+<!-- ════════════════════════════════════════════════════════════ -->
+<header>
+  <div class="pokeball-icon"></div>
+  <h1>PokéDex</h1>
+  <div class="header-right">
+    <span class="count-badge">898 Pokémon</span>
+  </div>
+</header>
+
+<div class="app">
+
+  <!-- ── Sidebar ─────────────────────────────────────────────── -->
+  <aside class="sidebar">
+    <div class="filter-group">
+      <label>Buscar</label>
+      <input class="search-input" type="text" placeholder="Nombre o número…" value="char">
+    </div>
+
+    <div class="filter-group">
+      <label>Tipo</label>
+      <div class="type-grid">
+        <div class="type-chip t-fire active">Fuego</div>
+        <div class="type-chip t-water inactive">Agua</div>
+        <div class="type-chip t-grass inactive">Planta</div>
+        <div class="type-chip t-electric inactive">Eléctrico</div>
+        <div class="type-chip t-psychic inactive">Psíquico</div>
+        <div class="type-chip t-normal inactive">Normal</div>
+        <div class="type-chip t-flying inactive">Volador</div>
+        <div class="type-chip t-bug inactive">Bicho</div>
+        <div class="type-chip t-ghost inactive">Fantasma</div>
+        <div class="type-chip t-dragon inactive">Dragón</div>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <label>Generación</label>
+      <div class="type-grid">
+        <div class="type-chip active" style="background:var(--red)">Gen I</div>
+        <div class="type-chip inactive" style="background:var(--mid)">Gen II</div>
+        <div class="type-chip inactive" style="background:var(--mid)">Gen III</div>
+        <div class="type-chip inactive" style="background:var(--mid)">Gen IV</div>
+      </div>
+    </div>
+
+    <div class="filter-group range-group">
+      <label>Estadísticas base</label>
+      <div class="range-row">
+        <span><span>HP mín.</span><span>40</span></span>
+        <input type="range" min="1" max="255" value="40">
+      </div>
+      <div class="range-row">
+        <span><span>Ataque mín.</span><span>0</span></span>
+        <input type="range" min="1" max="255" value="0">
+      </div>
+    </div>
+
+    <button class="btn-reset">✕ Limpiar filtros</button>
+  </aside>
+
+  <!-- ── Main ─────────────────────────────────────────────────── -->
+  <main class="main">
+
+    <!-- Sort bar -->
+    <div class="sort-bar">
+      <p>Mostrando <strong>3</strong> de <strong>9</strong> resultados para "char"</p>
+      <select class="sort-select">
+        <option>Ordenar: Número ↑</option>
+        <option>Ordenar: Número ↓</option>
+        <option>Ordenar: A–Z</option>
+        <option>Ordenar: Ataque ↓</option>
+      </select>
+    </div>
+
+    <!-- ── VISTA 1: Grid de tarjetas ───────────────────────── -->
+    <div style="position:relative;">
+      <div class="section-label">Vista 1 — Listado</div>
+      <div class="grid" id="card-grid">
+
+        <!-- Charmander -->
+        <div class="card" onclick="openModal('charmander')">
+          <div class="card-bg t-fire"></div>
+          <div class="card-number">#004</div>
+          <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png" alt="Charmander" onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png'">
+          <div class="card-name">Charmander</div>
+          <div class="type-tags">
+            <span class="type-tag t-fire">Fuego</span>
+          </div>
+        </div>
+
+        <!-- Charmeleon -->
+        <div class="card" onclick="openModal('charmeleon')">
+          <div class="card-bg t-fire"></div>
+          <div class="card-number">#005</div>
+          <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/5.png" alt="Charmeleon" onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png'">
+          <div class="card-name">Charmeleon</div>
+          <div class="type-tags">
+            <span class="type-tag t-fire">Fuego</span>
+          </div>
+        </div>
+
+        <!-- Charizard -->
+        <div class="card" onclick="openModal('charizard')">
+          <div class="card-bg t-fire"></div>
+          <div class="card-number">#006</div>
+          <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png" alt="Charizard" onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png'">
+          <div class="card-name">Charizard</div>
+          <div class="type-tags">
+            <span class="type-tag t-fire">Fuego</span>
+            <span class="type-tag t-flying">Volador</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── VISTA 2: Estados de carga y error ─────────────────── -->
+    <div class="states-panel">
+      <h2>Estados de UI</h2>
+      <div class="states-row">
+        <!-- Cargando -->
+        <div class="state-box">
+          <div class="state-title">Cargando</div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:12px; padding:24px 0;">
+            <div class="spinner"></div>
+            <p style="font-size:12px;color:var(--muted);">Cargando Pokémon…</p>
+          </div>
+          <p style="font-size:11px;color:var(--muted);margin-top:4px">Muestra un spinner mientras llega la respuesta de la API</p>
+        </div>
+
+        <!-- Error -->
+        <div class="state-box">
+          <div class="state-title">Error de red</div>
+          <div class="error-state" style="padding:20px 10px;">
+            <div class="error-icon">⚡</div>
+            <h2 style="font-size:16px;">Algo salió mal</h2>
+            <p style="font-size:12px;">No se pudo conectar con la PokéAPI. Comprueba tu conexión.</p>
+            <button class="btn-retry">Reintentar</button>
+          </div>
+        </div>
+
+        <!-- Sin resultados -->
+        <div class="state-box">
+          <div class="state-title">Sin resultados</div>
+          <div class="empty-state" style="padding:20px 10px;">
+            <div class="empty-icon">🔍</div>
+            <h2 style="font-size:16px;">Sin resultados</h2>
+            <p style="font-size:12px;">No hay Pokémon que coincidan con tu búsqueda.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Paginación ─────────────────────────────────────────── -->
+    <div class="section-label">Paginación</div>
+    <div class="pagination" style="margin-top:8px;">
+      <button class="page-btn" disabled>‹</button>
+      <button class="page-btn active">1</button>
+      <button class="page-btn">2</button>
+      <button class="page-btn">3</button>
+      <span class="page-dots">…</span>
+      <button class="page-btn">45</button>
+      <button class="page-btn">›</button>
+    </div>
+
+  </main>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════ -->
+<!-- MODAL DE DETALLE                                             -->
+<!-- ════════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal" onclick="closeOnOverlay(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+
+    <div class="modal-header" id="modal-header">
+      <div class="modal-header-bg t-fire" id="modal-bg"></div>
+      <img class="modal-sprite" id="modal-img"
+        src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png"
+        alt="Charizard"
+        onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png'">
+      <div class="modal-header-info">
+        <div class="num">#006</div>
+        <h2 id="modal-name">Charizard</h2>
+        <div class="type-tags" id="modal-types">
+          <span class="type-tag t-fire">Fuego</span>
+          <span class="type-tag t-flying">Volador</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <div class="tabs">
+        <button class="tab active" onclick="switchTab(this, 'stats')">Stats</button>
+        <button class="tab" onclick="switchTab(this, 'info')">Info</button>
+        <button class="tab" onclick="switchTab(this, 'moves')">Movimientos</button>
+      </div>
+
+      <!-- Tab: Stats -->
+      <div id="tab-stats">
+        <div class="detail-section">
+          <h3>Estadísticas base</h3>
+          <div class="stats-list">
+            <div class="stat-row">
+              <span class="stat-name">HP</span>
+              <span class="stat-val">78</span>
+              <div class="stat-bar-bg"><div class="stat-bar" style="width:31%;background:#4CAF50"></div></div>
+            </div>
+            <div class="stat-row">
+              <span class="stat-name">Ataque</span>
+              <span class="stat-val">84</span>
+              <div class="stat-bar-bg"><div class="stat-bar" style="width:33%;background:var(--red)"></div></div>
+            </div>
+            <div class="stat-row">
+              <span class="stat-name">Defensa</span>
+              <span class="stat-val">78</span>
+              <div class="stat-bar-bg"><div class="stat-bar" style="width:31%;background:#2196F3"></div></div>
+            </div>
+            <div class="stat-row">
+              <span class="stat-name">Atq. Esp.</span>
+              <span class="stat-val">109</span>
+              <div class="stat-bar-bg"><div class="stat-bar" style="width:43%;background:#9C27B0"></div></div>
+            </div>
+            <div class="stat-row">
+              <span class="stat-name">Def. Esp.</span>
+              <span class="stat-val">85</span>
+              <div class="stat-bar-bg"><div class="stat-bar" style="width:33%;background:#00BCD4"></div></div>
+            </div>
+            <div class="stat-row">
+              <span class="stat-name">Velocidad</span>
+              <span class="stat-val">100</span>
+              <div class="stat-bar-bg"><div class="stat-bar" style="width:39%;background:var(--yellow)"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Info -->
+      <div id="tab-info" style="display:none">
+        <div class="detail-section">
+          <h3>Datos físicos</h3>
+          <div class="info-grid">
+            <div class="info-item"><div class="label">Altura</div><div class="value">1.7 m</div></div>
+            <div class="info-item"><div class="label">Peso</div><div class="value">90.5 kg</div></div>
+            <div class="info-item"><div class="label">Exp. base</div><div class="value">240</div></div>
+            <div class="info-item"><div class="label">Captura</div><div class="value">45</div></div>
+          </div>
+        </div>
+        <div class="detail-section" style="margin-top:20px">
+          <h3>Habilidades</h3>
+          <div class="abilities">
+            <span class="ability-tag">Llamarada</span>
+            <span class="ability-tag">Fuerza solar</span>
+            <span class="ability-tag hidden">★ Poder solar (oculta)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Moves (placeholder) -->
+      <div id="tab-moves" style="display:none">
+        <div class="empty-state" style="padding:40px 20px;">
+          <div class="empty-icon">📋</div>
+          <h2 style="font-size:16px;">Movimientos</h2>
+          <p style="font-size:13px;">Lista de movimientos aprendibles. Opcional — implementa si tienes tiempo.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── Datos de muestra ────────────────────────────────────────
+  const data = {
+    charmander: {
+      num: '#004', name: 'Charmander', img: 4,
+      types: [{ label:'Fuego', cls:'t-fire' }], bg: 't-fire'
+    },
+    charmeleon: {
+      num: '#005', name: 'Charmeleon', img: 5,
+      types: [{ label:'Fuego', cls:'t-fire' }], bg: 't-fire'
+    },
+    charizard: {
+      num: '#006', name: 'Charizard', img: 6,
+      types: [{ label:'Fuego', cls:'t-fire' }, { label:'Volador', cls:'t-flying' }], bg: 't-fire'
+    }
+  };
+
+  function openModal(key) {
+    const p = data[key];
+    document.getElementById('modal-name').textContent = p.name;
+    document.querySelector('.modal .num').textContent = p.num;
+    document.getElementById('modal-img').src =
+      `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${p.img}.png`;
+    document.getElementById('modal-img').onerror = function() {
+      this.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${p.img}.png`;
+    };
+    const bg = document.getElementById('modal-bg');
+    bg.className = 'modal-header-bg ' + p.bg;
+    const types = document.getElementById('modal-types');
+    types.innerHTML = p.types.map(t => `<span class="type-tag ${t.cls}">${t.label}</span>`).join('');
+    // Reset tabs
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab')[0].classList.add('active');
+    ['stats','info','moves'].forEach((t,i) => {
+      document.getElementById('tab-'+t).style.display = i === 0 ? 'block' : 'none';
+    });
+    document.getElementById('modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeOnOverlay(e) {
+    if (e.target === document.getElementById('modal')) closeModal();
+  }
+
+  function switchTab(el, name) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    ['stats','info','moves'].forEach(t => {
+      document.getElementById('tab-'+t).style.display = t === name ? 'block' : 'none';
+    });
+  }
+</script>
+</body>
+</html>
